@@ -3,9 +3,13 @@ import {
   Button,
   CircularProgress,
   Container,
+  FormControl,
   Grid2,
   IconButton,
   InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -31,6 +35,8 @@ const Products = () => {
     onSearch,
     onNext,
     onPrevious,
+    onSortingChange,
+    sort,
   } = useProductList();
 
   const onProductClick = useCallback(
@@ -49,6 +55,7 @@ const Products = () => {
     <Container>
       <Box
         marginBottom={3}
+        gap={3}
         display={"flex"}
         justifyContent={"center"}
         alignContent={"center"}
@@ -70,6 +77,18 @@ const Products = () => {
             },
           }}
         />
+        <FormControl variant="outlined">
+          <InputLabel id="sort-select-label">Sort</InputLabel>
+          <Select
+            labelId="sort-select-label"
+            value={sort}
+            onChange={(e) => onSortingChange(e.target.value as any)}
+            label="Sort"
+          >
+            <MenuItem value="ASC">Ascending</MenuItem>
+            <MenuItem value="DESC">Descending</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
       <Grid2 container spacing={3} justifyContent={"center"}>
         {!!productList.length ? (
