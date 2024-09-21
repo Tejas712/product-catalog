@@ -1,11 +1,8 @@
-import { ReactNode } from "react";
 import RouteProvider from "../route/RouteProvider";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-
-type Props = {
-  children: ReactNode;
-};
-
+import SnackbarProvider from "../context/SnackbarContext";
+import { Provider as ReduxProvider } from "react-redux";
+import store from "../store/store";
 
 export const client = new ApolloClient({
   uri: `${process.env.REACT_APP_BACKEND_BASE_URL}/graphql`,
@@ -16,10 +13,13 @@ export const client = new ApolloClient({
 });
 
 const Providers = () => {
-  console.log(process.env);
   return (
     <ApolloProvider client={client}>
-      <RouteProvider />
+      <ReduxProvider store={store}>
+        <SnackbarProvider>
+          <RouteProvider />
+        </SnackbarProvider>
+      </ReduxProvider>
     </ApolloProvider>
   );
 };
