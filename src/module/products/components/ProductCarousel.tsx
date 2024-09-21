@@ -1,6 +1,7 @@
-import { Box, Card, CardMedia, Grid } from "@mui/material";
+import { Box, Card, CardMedia } from "@mui/material";
 import { FC, useCallback, useEffect, useState } from "react";
 import Thumbnails from "../../../components/carousel/Thumbnails";
+import Grid from "@mui/material/Grid2";
 
 type Props = {
   images: string[] | string;
@@ -13,10 +14,6 @@ const ProductCarousel: FC<Props> = ({ images }) => {
     setCurrentIndex(index);
   }, []);
 
-  const [selectedImg, setSelectedImg] = useState<string>(
-    "https://via.placeholder.com/600x400"
-  );
-
   useEffect(() => {
     if (!Array.isArray(images)) {
       setCurrentIndex(-1);
@@ -27,7 +24,7 @@ const ProductCarousel: FC<Props> = ({ images }) => {
 
   return (
     <Grid display={{ sm: "block", md: "flex" }} sx={{ flexDirection: "row" }}>
-      <Grid item xs={12} md={2}>
+      <Grid size={{ xs: 12, md: 2 }}>
         <Box
           sx={{
             display: "flex",
@@ -49,9 +46,7 @@ const ProductCarousel: FC<Props> = ({ images }) => {
       </Grid>
 
       <Grid
-        item
-        xs={12}
-        md={12}
+        size={{ xs: 12, md: 12 }}
         display={{ sm: "block", md: "flex" }}
         alignItems={"center"}
         p={1}

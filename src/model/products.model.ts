@@ -18,9 +18,9 @@ export type ItemVariant = {
   isEnabled: boolean;
   merchantId: number;
   name?: string | null;
-  price: string; // Use `number` for decimals
+  price: string; 
   selectedOptions: ItemVariantOption[];
-  weight?: number; // Use `number` for decimals
+  weight?: number;
 };
 
 export type Merchant = {
@@ -36,13 +36,12 @@ export type Merchant = {
   inventoryRent?: InventoryRent;
   lastModified: Date;
   name: string;
-  overShipping: number; // Use `number` for decimals
+  overShipping: number; 
   owner?: User;
   ownerId?: string;
   shopifyShop?: string;
   taxId?: string;
-  threshold: number; // Use `number` for decimals
-  users: User[];
+  threshold: number; 
 };
 
 export type ItemVariantOption = {
@@ -66,7 +65,6 @@ export type VariantOption = {
   value: string;
 };
 
-// Assuming these types exist elsewhere in your schema
 export type CustomerAddress = {
   // Define fields according to your schema
 };
