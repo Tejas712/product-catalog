@@ -6,6 +6,8 @@ import {
 import { Layout } from "../layout/Layout";
 import Products from "../module/products/Products";
 import ProductDetails from "../module/products/ProductDetails";
+import Cart from "../module/cart/Cart";
+import NotFound from "../layout/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +22,15 @@ const router = createBrowserRouter([
         path: "/product-details",
         Component: ProductDetails,
       },
+      {
+        path: "/cart",
+        Component: Cart,
+      },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFound,
   },
 ]);
 

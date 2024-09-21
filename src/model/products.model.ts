@@ -18,7 +18,7 @@ export type ItemVariant = {
   isEnabled: boolean;
   merchantId: number;
   name?: string | null;
-  price: number; // Use `number` for decimals
+  price: string; // Use `number` for decimals
   selectedOptions: ItemVariantOption[];
   weight?: number; // Use `number` for decimals
 };

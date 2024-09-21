@@ -14,10 +14,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate } from "react-router-dom";
 import { navItems } from "./navItems";
+import { useSelector } from "react-redux";
+import { cartTotalItems } from "../../store/slices/cart/selectors";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  // const cartTotalItem = useSelector(cartTotalItems);
+  const cartTotalItem = useSelector(cartTotalItems);
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
@@ -44,7 +46,12 @@ const Header = () => {
       <List>
         <ListItemButton onClick={goToCart}>
           <ShoppingCartIcon sx={{ marginRight: "10px" }} />
-          <ListItemText primary="Cart" />
+          <ListItemText primary="Cart" />{" "}
+          <Badge
+            badgeContent={`${cartTotalItem}`}
+            color="primary"
+            sx={{ marginRight: "10px" }}
+          ></Badge>
         </ListItemButton>
         <ListItemButton>
           <AccountCircleIcon sx={{ marginRight: "10px" }} />
@@ -96,9 +103,9 @@ const Header = () => {
               </Typography>
             ))}
             <IconButton edge="end" onClick={goToCart} sx={{ color: "#fff" }}>
-              {/* <Badge badgeContent={`${cartTotalItem}`}>
-              </Badge> */}
-              <ShoppingCartIcon />
+              <Badge badgeContent={`${cartTotalItem}`}>
+                <ShoppingCartIcon />
+              </Badge>
             </IconButton>
             <IconButton edge="end" sx={{ color: "#fff" }}>
               <AccountCircleIcon />

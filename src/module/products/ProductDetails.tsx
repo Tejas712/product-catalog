@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getSelectedItem } from "../../store/slices/selected-product/selectors";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
@@ -9,15 +9,67 @@ import Box from "@mui/material/Box";
 import ColorBadge from "../../components/color-badge/ColorBadge";
 import { ItemVariantOption } from "../../model/products.model";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import { addItem } from "../../store/slices/cart";
+import { cartItemList } from "../../store/slices/cart/selectors";
 
 const ProductDetails = () => {
   const { item, itemVariant, colors, sizes } = useSelector(getSelectedItem);
   const [selectedColor, setSelectedColor] = useState<ItemVariantOption>();
   const [selectedSize, setSelectedSize] = useState<ItemVariantOption>();
-  const isAlreadyInCart = false;
-  const goToCart = () => {};
-  const addToCart = () => {};
-  const buyNow = () => {};
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector(cartItemList);
+
+  const isAlreadyInCart = useMemo(() => {
+    return cartItems.some(
+      (itm) =>
+        itm.itemVariant.itemId === itemVariant?.itemId &&
+        itm.itemVariant.id === itemVariant?.id
+    );
+  }, [cartItems, itemVariant?.id, itemVariant?.itemId]);
+
+  useEffect(() => {
+    if (!(item && itemVariant)) {
+      navigate("/");
+    }
+  }, [navigate]);
+  
+  const addToCart = useCallback(() => {
+    if (!(item && itemVariant)) {
+      return;
+    }
+    return dispatch(
+      addItem({
+        item,
+        itemVariant,
+        quantity: 1,
+        color: selectedColor,
+        size: selectedSize,
+      })
+    );
+  }, [dispatch, item, itemVariant, selectedColor, selectedSize]);
+
+  const buyNow = useCallback(() => {
+    if (!(item && itemVariant)) {
+      return;
+    }
+    dispatch(
+      addItem({
+        item,
+        itemVariant,
+        quantity: 1,
+        color: selectedColor,
+        size: selectedSize,
+      })
+    );
+    navigate("/cart");
+  }, [dispatch, item, itemVariant, navigate, selectedColor, selectedSize]);
+
+  const goToCart = useCallback(() => {
+    navigate("/cart");
+  }, [navigate]);
 
   const images = useMemo(() => {
     const images = [];
@@ -50,35 +102,30 @@ const ProductDetails = () => {
             <Typography variant="h4" gutterBottom>
               {name}
             </Typography>
-            {/* <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-              <Typography
-                variant="body1"
-                sx={{ ml: 1, color: "text.secondary" }}
-              >
-                {product.averageRating}
-              </Typography>
-            </Box> */}
             <Typography variant="h5" gutterBottom color="primary">
               {itemVariant?.price} {item?.currency}
             </Typography>
 
             {/* Color Options */}
-            <Typography variant="body1" sx={{ mb: 1 }}>
-              Colors
-            </Typography>
-            <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-              {colors.map((color) => (
-                <ColorBadge
-                  key={color.itemVariantId}
-                  color={color.variantOption.colorCode!}
-                  onClick={() => setSelectedColor(color)}
-                  selected={
-                    selectedColor?.itemVariantId === color.itemVariantId
-                  }
-                />
-              ))}
-            </Box>
-
+            {!!colors.length && (
+              <>
+                <Typography variant="body1" sx={{ mb: 1 }}>
+                  Colors
+                </Typography>
+                <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+                  {colors.map((color) => (
+                    <ColorBadge
+                      key={color.itemVariantId}
+                      color={color.variantOption.colorCode!}
+                      onClick={() => setSelectedColor(color)}
+                      selected={
+                        selectedColor?.itemVariantId === color.itemVariantId
+                      }
+                    />
+                  ))}
+                </Box>
+              </>
+            )}
             {/* Size Options */}
             <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
               {sizes.map((size) => (
@@ -150,18 +197,6 @@ const ProductDetails = () => {
             {item?.description}
           </Typography>
         </Box>
-
-        {/* Reviews */}
-        {/* <Box>
-          <Typography variant="h6" gutterBottom>
-            Reviews
-          </Typography>
-          <Box display={"flex"} flexWrap={"wrap"} gap={2}>
-            {product.reviews.map((review, index) => (
-              <ReviewCard key={index} review={review} />
-            ))}
-          </Box>
-        </Box> */}
       </>
     </Container>
   );

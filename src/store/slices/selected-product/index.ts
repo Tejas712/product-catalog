@@ -35,12 +35,13 @@ const SelectedItemSlice = createSlice({
       const sizes = itemVariant?.selectedOptions.filter(
         (o) => o.variantOptionId === SIZE_VARIANT_ID
       );
-      state = { item: action.payload, itemVariant, colors, sizes };
-      return state
+      state.item = action.payload;
+      state.itemVariant = itemVariant;
+      state.colors = colors;
+      state.sizes = sizes;
     },
     clearItem: (state) => {
-      state = initialState;
-      return state
+      return initialState;
     },
   },
 });
