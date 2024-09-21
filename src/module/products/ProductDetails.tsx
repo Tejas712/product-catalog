@@ -86,8 +86,6 @@ const ProductDetails = () => {
     return `${item?.name} ${itemVariant?.name ? `(${itemVariant.name})` : ""}`;
   }, [item, itemVariant]);
 
-  console.log("check data", { images, name, colors, sizes, item });
-
   return (
     <Container maxWidth="lg" sx={{ pt: 4 }}>
       <>

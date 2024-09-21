@@ -1,13 +1,12 @@
 import {
-  createBrowserRouter,
-  redirect,
-  RouterProvider,
+  createBrowserRouter, RouterProvider
 } from "react-router-dom";
 import { Layout } from "../layout/Layout";
 import Products from "../module/products/Products";
 import ProductDetails from "../module/products/ProductDetails";
 import Cart from "../module/cart/Cart";
 import NotFound from "../layout/NotFound";
+import Checkout from "../module/cart/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         Component: Cart,
+      },
+      {
+        path: "/checkout",
+        Component: Checkout,
       },
     ],
   },

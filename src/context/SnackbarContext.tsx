@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  ReactNode,
-  useCallback,
-} from "react";
+import React, { createContext, useState, ReactNode, useCallback } from "react";
 import { Snackbar, Alert, AlertColor, SnackbarProps } from "@mui/material";
 
 type SnackbarOptions = SnackbarProps & {
@@ -66,7 +61,6 @@ const SnackbarProvider: React.FC<SnackbarProviderProps> = ({ children }) => {
         onClose={hideSnackbar}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         {...snackbarState}
-        
       >
         <Alert
           onClose={hideSnackbar}
